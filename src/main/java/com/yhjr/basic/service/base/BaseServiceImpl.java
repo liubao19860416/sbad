@@ -743,6 +743,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         if (DateTimeUtil.isDatetimeZero(record.getCreateDate())) {
             record.setCreateDate(DateTimeUtil.currentTimestamp());
         }
+        if(StringUtils.isBlank(record.getTransactionId())){
+            record.setTransactionId(UUIDGenerator.generateTransactionId());
+        }
         return record;
     }
 

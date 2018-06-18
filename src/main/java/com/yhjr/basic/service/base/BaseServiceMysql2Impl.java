@@ -742,6 +742,9 @@ public abstract class BaseServiceMysql2Impl<T extends BaseEntity> implements Bas
       if (DateTimeUtil.isDatetimeZero(record.getCreateDate())) {
           record.setCreateDate(DateTimeUtil.currentTimestamp());
       }
+      if(StringUtils.isBlank(record.getTransactionId())){
+          record.setTransactionId(UUIDGenerator.generateTransactionId());
+      }
       return record;
   }
 
