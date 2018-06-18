@@ -3,6 +3,7 @@ package com.yhjr.basic.config;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,15 @@ public class JedisClusterConfig {
              String[] ipPortPair = ipPort.split(":");
              jedisClusterNodes.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
          }
-        JedisCluster jedisCluster = new JedisCluster(jedisClusterNodes,redisClusterProperties.getConnectionTimeout(),
-                redisClusterProperties.getMaxAttempts(),jedisPoolConfig());
-      //带密码认证的配置方式
-//      JedisCluster jedisCluster = new JedisCluster(jedisClusterNodes, redisClusterProperties.getConnectionTimeout(), 
-//            redisClusterProperties.getSoTimeout(), redisClusterProperties.getMaxAttempts(), redisClusterProperties.getPassword(), initJedisPoolConfig());
+         JedisCluster jedisCluster = null;
+         if(StringUtils.isBlank(redisClusterProperties.getPassword())){
+             jedisCluster = new JedisCluster(jedisClusterNodes,redisClusterProperties.getConnectionTimeout(),
+                     redisClusterProperties.getSoTimeout(),redisClusterProperties.getMaxAttempts(),jedisPoolConfig());
+         }else{
+             //带密码认证的配置方式
+             jedisCluster = new JedisCluster(jedisClusterNodes, redisClusterProperties.getConnectionTimeout(), 
+                     redisClusterProperties.getSoTimeout(), redisClusterProperties.getMaxAttempts(), redisClusterProperties.getPassword(), jedisPoolConfig());
+         }
         LOGGER.debug("获取JedisCluster执行结束。。。");
          return jedisCluster;
     }
