@@ -13,9 +13,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +29,16 @@ public final class MyFileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyFileUtils.class);
 
     public static boolean writeStringToFile(String sourceFilePath, String data) {
+        return writeStringToFile(sourceFilePath, data, null);
+    }
+    
+    public static boolean writeStringToFile(String sourceFilePath, String data,Charset charset) {
+        if(charset==null){
+            //charset=Charset.forName("utf-8");
+            charset=Charset.forName("GBK");
+        }
         try {
-            FileUtils.writeStringToFile(new File(sourceFilePath), data, Charset.forName("utf-8"), true);
+            FileUtils.writeStringToFile(new File(sourceFilePath), data, charset, true);
         } catch (IOException e) {
             LOGGER.error("写入文件信息异常!",e);
             return false;
@@ -56,11 +62,13 @@ public final class MyFileUtils {
      * @param sourceFilePath 待压缩的文件或文件夹
      * @param zipFileFullName 压缩后的文件全路径+文件名信息(不包含文件名后缀信息)
      * @return
+     * @see ZipFileUtil.zipFiles(...)
      */
-    @SuppressWarnings("unchecked")
+    @Deprecated
     public static boolean fileToZip(String sourceFilePath, String zipFileFullName) {
         if(StringUtils.isBlank(zipFileFullName)){
-            return false;
+            zipFileFullName=sourceFilePath+".zip";
+            //return false;
         }else{
             zipFileFullName+=".zip";
         }

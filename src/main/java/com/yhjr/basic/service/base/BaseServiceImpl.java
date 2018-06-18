@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -79,9 +80,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             record.setTransactionId(transactionId);
             return myMapper.select(record);
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.error("查询方法异常",e);
         }
-        return null;
+        return Collections.emptyList();
 //        Example example = new Example(entityClass);
 //        example.createCriteria().andEqualTo("transactionId",transactionId);
 //        return myMapper.selectByExample(example);
@@ -150,7 +151,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             LOGGER.debug("查询条件信息:createDateBegin为:{},createDateEnd为:{}",createDateBegin,createDateEnd);
         }
         if(createDateBegin==null||createDateEnd==null){
-            return null;
+            return Collections.emptyList();
         }
         /*if(createDateBegin.after(createDateEnd)){
             Timestamp tmp=createDateBegin;
@@ -201,7 +202,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             LOGGER.debug("查询条件信息:createDateBegin为:{},createDateEnd为:{}",createDateBegin,createDateEnd);
         }
         if(createDateBegin==null||createDateEnd==null){
-            return null;
+            return Collections.emptyList();
         }
         if(createDateBegin.after(createDateEnd)){
             Date tmp=createDateBegin;
@@ -288,7 +289,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             throw new BaseServiceException("请求参数属性key不能为空!");
         }
         if(CollectionUtils.isEmpty(keyList)){
-            return null;
+            return Collections.emptyList();
         }
         Example example = new Example(entityClass);
         example.setOrderByClause("id DESC");
@@ -843,7 +844,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         if (value != null) {
             return JSON.parseArray(value, clazz);
         }
-        return null;
+        return Collections.emptyList();
     }
 
 }

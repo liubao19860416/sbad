@@ -323,6 +323,20 @@ public class DateTimeUtil {
 		cal.set(Calendar.DATE, 1);
 		return new java.sql.Date(cal.getTime().getTime());
 	}
+	
+	/**
+	 * 获得 指定日期月份的第一天。
+	 */
+	public static Date getFirstDayOfMonth(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(date);
+	    calendar.set(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+	    return calendar.getTime();
+	}
 
 	/**
 	 * 获得当前月份的第一天并且按照yyyy-MM-dd格式化为字符串
@@ -336,6 +350,23 @@ public class DateTimeUtil {
 		} else {
 			return formatDate2Str(date);
 		}
+	}
+	
+	/**
+	 * 获得指定月份的最后第一天。
+	 */
+	public static Date getLastDayOfMonth(Date date) {
+	    Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DATE, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.add(Calendar.MONTH, 1);
+        //calendar.add(Calendar.DATE, -1);
+        calendar.add(Calendar.MILLISECOND, -1);
+	    return calendar.getTime();
 	}
 
 	/**
