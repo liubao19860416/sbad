@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.servlet.Servlet;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -24,6 +26,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -50,6 +53,9 @@ import com.yhjr.basic.controller.base.MyGlobalController;
 public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseWebMvcConfiguration.class);
 
+    @Value("${resources.staticLocations:}")
+    private String[]  resourcesStaticLocations ;
+    
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(customFastJsonHttpMessageConverter());
@@ -101,6 +107,17 @@ public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
         //supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
         jsonConverter.setSupportedMediaTypes(supportedMediaTypes);
         return jsonConverter;
+    }
+    
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("注入的参数信息为:{}",JSON.toJSONString(resourcesStaticLocations));
+        }
+        if(ArrayUtils.isNotEmpty(resourcesStaticLocations)){
+            registry.addResourceHandler("/**").addResourceLocations(resourcesStaticLocations);
+        }
+        super.addResourceHandlers(registry);
     }
     
     /**
