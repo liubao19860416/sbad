@@ -53,7 +53,7 @@ import com.yhjr.basic.controller.base.MyGlobalController;
 public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseWebMvcConfiguration.class);
 
-    @Value("${resources.staticLocations:}")
+    @Value("${resources.staticLocations:classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,,classpath:/templates/}")
     private String[]  resourcesStaticLocations ;
     
     @Override

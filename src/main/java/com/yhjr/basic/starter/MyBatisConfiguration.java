@@ -85,6 +85,8 @@ public class MyBatisConfiguration {
         targetDataSources.put(DataSourceType.MYSQL.getType(), primaryDataSource);
         if(secondDataSource!=null){
             targetDataSources.put(DataSourceType.MYSQL2.getType(), secondDataSource);
+        }else{
+            targetDataSources.put(DataSourceType.MYSQL2.getType(), primaryDataSource);
         }
         dataSource.setTargetDataSources(targetDataSources);
         dataSource.setDefaultTargetDataSource(primaryDataSource);
