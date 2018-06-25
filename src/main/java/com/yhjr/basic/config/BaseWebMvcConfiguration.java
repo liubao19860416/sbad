@@ -22,12 +22,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.alibaba.fastjson.JSON;
@@ -50,19 +49,19 @@ import com.yhjr.basic.controller.base.MyGlobalController;
 @ConditionalOnClass({ Servlet.class, DispatcherServlet.class,WebMvcConfigurerAdapter.class })
 //@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)
 //@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 1)
-public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
+public class BaseWebMvcConfiguration extends WebMvcConfigurerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseWebMvcConfiguration.class);
 
-    @Value("${resources.staticLocations:classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,,classpath:/templates/}")
+    @Value("${resources.staticLocations:classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/}")
     private String[]  resourcesStaticLocations ;
     
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(customFastJsonHttpMessageConverter());
-        //converters.add(customMappingJackson2HttpMessageConverter());
-        super.addDefaultHttpMessageConverters(converters);
-        LOGGER.info("configureMessageConverters执行了");
-    }
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(customFastJsonHttpMessageConverter());
+//        //converters.add(customMappingJackson2HttpMessageConverter());
+//        super.addDefaultHttpMessageConverters(converters);
+//        LOGGER.info("configureMessageConverters执行了");
+//    }
     
 	@Bean
     public MappingJackson2HttpMessageConverter customMappingJackson2HttpMessageConverter() {
@@ -78,6 +77,9 @@ public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
         return jsonConverter;
     }
 	
+	/**
+	 * 改配置默認生效
+	 */
     @Bean
     @SuppressWarnings("deprecation")
     public FastJsonHttpMessageConverter customFastJsonHttpMessageConverter() {
@@ -121,10 +123,17 @@ public class BaseWebMvcConfiguration extends WebMvcConfigurationSupport {
     }
     
     /**
+     * 解决不引入改配置报错问题
+     */
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+    
+    /**
      * 设置异常错误处理信息
      */
     @Bean
-    //@ConditionalOnMissingBean(EmbeddedServletContainerCustomizer.class)
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return new EmbeddedServletContainerCustomizer() {
             @Override
