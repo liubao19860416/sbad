@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -36,6 +37,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yhjr.basic.controller.base.MyGlobalController;
+import com.yhjr.basic.utils.MyLocaleResolver;
 
 /**
  * WebMVC配置定义信息加载
@@ -120,6 +122,11 @@ public class BaseWebMvcConfiguration extends WebMvcConfigurerAdapter {
             registry.addResourceHandler("/**").addResourceLocations(resourcesStaticLocations);
         }
         super.addResourceHandlers(registry);
+    }
+    
+    @Bean
+    public LocaleResolver localeResolver() {
+        return new MyLocaleResolver();
     }
     
     /**
