@@ -51,7 +51,9 @@ public class MessageSourceUtil {
 	 */
 	public String getMessage(String code, Object[] args, String defaultMessage) {
 		Locale locale = LocaleContextHolder.getLocale();
-		locale=Locale.SIMPLIFIED_CHINESE;
+		if(!Locale.SIMPLIFIED_CHINESE.equals(locale)){
+		    locale=Locale.US;
+		}
 		return messageSource.getMessage(code, args, defaultMessage, locale);
 	}
 
