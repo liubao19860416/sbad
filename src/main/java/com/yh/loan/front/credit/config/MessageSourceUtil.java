@@ -7,8 +7,9 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
 
 /**
  * 提示文案信息封装类
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Component;
  * @Author LiuBao
  * @Version 2.0 2017年3月29日
  */
-@Component
+@Configuration
+@ComponentScan("com.yh.loan.front.credit")
 public class MessageSourceUtil {
     @SuppressWarnings("unused")
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageSourceUtil.class);
