@@ -2,7 +2,7 @@ package com.yhjr.basic.controller.base;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.entity.ContentType;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,7 +48,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = ERROR_400,produces="application/json;charset=UTF-8")
 	public Object handleError400(HttpServletResponse response) {
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_400,  
 				getMessage(AbsErrorCodeConstant.ERROR_CODE_400));
 	}
@@ -56,7 +56,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = ERROR_401,produces="application/json;charset=UTF-8")
 	public Object handleError401(HttpServletResponse response) {
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_401,  
 				getMessage(AbsErrorCodeConstant.ERROR_CODE_401));
 	}
@@ -64,7 +64,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = ERROR_404,produces="application/json;charset=UTF-8")
 	public Object handleError404(HttpServletResponse response) {
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_404,  
 				getMessage(AbsErrorCodeConstant.ERROR_CODE_404));
 	}
@@ -72,7 +72,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = ERROR_405,produces="application/json;charset=UTF-8")
 	public Object handleError405(HttpServletResponse response) {
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_405,  
 				getMessage(AbsErrorCodeConstant.ERROR_CODE_405));
 	}
@@ -80,7 +80,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = ERROR_500,produces="application/json;charset=UTF-8")
 	public Object handleError500(HttpServletResponse response) {
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_500,  
 				getMessage(AbsErrorCodeConstant.ERROR_CODE_500));
 	}
@@ -88,7 +88,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = NOAUTH_IP)
 	public Object handleNoauthIp(HttpServletResponse response) {
-	    response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+	    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 	    return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_10004,  
 	            getMessage(AbsErrorCodeConstant.ERROR_CODE_10004));
 	}
@@ -96,7 +96,7 @@ public class  MyGlobalController extends AbsBaseController<MyGlobalController>{
 	@ResponseBody
 	@RequestMapping(value = NOAUTH_FREQUENTIP)
 	public Object handleNoauthFrequentIp(HttpServletResponse response) {
-	    response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+	    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 	    return new ResultInfo<String>(AbsErrorCodeConstant.ERROR_CODE_10005,  
 	            getMessage(AbsErrorCodeConstant.ERROR_CODE_10005));
 	}
